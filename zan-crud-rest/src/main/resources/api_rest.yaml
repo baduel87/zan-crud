@@ -1,0 +1,137 @@
+swagger: "2.0"
+info:
+  description: "API per servizi REST utente"
+  version: "0.0.1"
+  title: "Zan REST Utenti"
+  contact:
+    email: "iannone.manuel@gmail.com"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+tags:
+- name: "user"
+  description: "CRUD su tabella utenti"
+schemes:
+- "http"
+paths:
+  /user:
+    post:
+      tags:
+      - "user"
+      summary: "Crea un utente"
+      description: ""
+      operationId: "createUser"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Contenuto dell'oggetto utente"
+        required: true
+        schema:
+          $ref: "#/definitions/User"
+      responses:
+        200:
+          description: "Utente inserito correttamente con id: {id}"
+    get:
+      tags:
+      - "user"
+      summary: "Restituisce la lista di tutti gli utenti"
+      description: ""
+      operationId: "getUserList"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: ""
+          schema:
+            $ref: "#/definitions/UserArray"
+  /user/{id}:
+    get:
+      tags:
+      - "user"
+      summary: "Restituisce l'utente con l'id specificato"
+      description: ""
+      operationId: "getUserById"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "L'id dell'utente"
+        required: true
+        type: "integer"
+      responses:
+        200:
+          description: ""
+          schema:
+            $ref: "#/definitions/UserFull"
+    put:
+      tags:
+      - "user"
+      summary: "Aggiorna i dati di un utente"
+      description: ""
+      operationId: "updateUser"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "L'id dell'utente"
+        required: true
+        type: "integer"
+      - in: "body"
+        name: "body"
+        description: "Contenuto dell'oggetto utente"
+        required: true
+        schema:
+          $ref: "#/definitions/User"
+      responses:
+        200:
+          description: "Dati utente aggiornati correttamente"
+          schema:
+            $ref: "#/definitions/User"
+    delete:
+      tags:
+      - "user"
+      summary: "Elimina un utente"
+      description: ""
+      operationId: "deleteUser"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "L'id utente"
+        required: true
+        type: "integer"
+      responses:
+        200:
+          description: "Utente eliminato correttamente"
+definitions:
+  UserArray:
+    type: "array"
+    items:
+      $ref: '#/definitions/UserFull'
+  UserFull:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+      firstName:
+        type: "string"
+      lastName:
+        type: "string"
+      dateOfBirth:
+        type: "string"
+        format: "date"
+  User:
+    type: "object"
+    properties:
+      firstName:
+        type: "string"
+      lastName:
+        type: "string"
+      dateOfBirth:
+        type: "string"
+        format: "date"
